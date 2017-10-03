@@ -3,7 +3,7 @@
 ```php
 composer require the-hasanov/millikart
 ```
-###Laravel
+### Laravel
 Service Provider
 ```php
 Chameleon\MilliKartServiceProvider::class,
@@ -22,7 +22,7 @@ MilliKart::register([
 
 MilliKart::status('test_reference');//return array
 ```
-###Native PHP
+### Native PHP
 ```php
 $millikart=new \Chameleon\MilliKart(include 'src/config/millikart.php');
 
