@@ -1,0 +1,20 @@
+{
+  "name": "the-hasanov/millikart",
+  "description": "MilliKart Class for laravel",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Hikmet Hesenov",
+      "email": "hikmet.hesenov.93@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "illuminate/support": "5.4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Chameleon\\": "src/"
+    }
+  }
+}

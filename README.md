@@ -1,2 +1,0 @@
-# millikart
-Millikart Laravel
