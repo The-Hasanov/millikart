@@ -1,4 +1,4 @@
-# CRex - easy and fast php data container
+# MilliKart Laravel
 ---
 ```php
 composer require the-hasanov/millikart
