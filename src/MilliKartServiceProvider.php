@@ -1,7 +1,6 @@
 <?php
 namespace Chameleon;
 
-
 use Illuminate\Support\ServiceProvider;
 
 class MilliKartServiceProvider extends ServiceProvider

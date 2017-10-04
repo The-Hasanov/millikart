@@ -1,6 +1,6 @@
 # MilliKart Laravel
 ---
-```php
+```console
 composer require the-hasanov/millikart
 ```
 ### Laravel
@@ -10,7 +10,7 @@ Chameleon\MilliKartServiceProvider::class,
 ```
 Facade
 ```php
-MilliKart => Chameleon\MilliKartFacade::class
+'MilliKart' => Chameleon\MilliKartFacade::class,
 ```
 Example
 ```php

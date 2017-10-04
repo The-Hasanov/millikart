@@ -1,7 +1,5 @@
 <?php
-
 namespace Chameleon;
-
 
 class MilliKart
 {

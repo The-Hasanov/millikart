@@ -1,5 +1,4 @@
 <?php
-
 namespace Chameleon;
 
 use Illuminate\Support\Facades\Facade;
