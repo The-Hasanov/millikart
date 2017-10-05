@@ -1,6 +1,10 @@
 <?php
-namespace Chameleon;
 
+namespace Chameleon;
+/**
+ * Class MilliKart
+ * @package Chameleon
+ */
 class MilliKart
 {
     /**
@@ -55,14 +59,12 @@ class MilliKart
      */
     public function register($params)
     {
-        $params['mid'] = $this->config['mid'];
-        $params['currency'] = array_key_exists('currency', $params) ? $params['currency'] : $this->config['currency'];
-        $params['language'] = array_key_exists('language', $params) ? $params['language'] : $this->config['language'];
+        $params = $this->mergeConfig($params);
 
         //generate after all params set
         $params['signature'] = $this->signature($params);
 
-        $xml = file_get_contents($this->gateway() . '/register?' . http_build_query($this->sortParams($params)));
+        $xml = file_get_contents($this->gateway('register') . '?' . http_build_query($this->sortParams($params)));
 
         return $this->xmlToArray($xml);
     }
@@ -73,10 +75,9 @@ class MilliKart
      */
     public function status($reference)
     {
-        $params['mid'] = $this->config['mid'];
-        $params['reference'] = $reference;
+        $params = $this->mergeConfig(['reference' => $reference]);
 
-        $xml = file_get_contents($this->gateway() . '/status?' . http_build_query($this->sortParams($params)));
+        $xml = file_get_contents($this->gateway('status') . '?' . http_build_query($this->sortParams($params)));
 
         return $this->xmlToArray($xml);
     }
@@ -100,9 +101,9 @@ class MilliKart
     /**
      * @return string
      */
-    public function gateway()
+    public function gateway($path = '')
     {
-        return $this->config[$this->config['env'] . '_gateway'];
+        return $this->config[$this->config['env'] . '_gateway'] . ($path ? '/' . $path : '');
     }
 
     /**
@@ -120,6 +121,15 @@ class MilliKart
     protected function sortParams($params)
     {
         return array_merge(array_intersect_key(array_flip($this->params), $params), $params);
+    }
+
+    /**
+     * @param $params
+     * @return array
+     */
+    protected function mergeConfig($params)
+    {
+        return array_merge(array_intersect_key($this->config, array_flip($this->params)), $params);
     }
 
     /**

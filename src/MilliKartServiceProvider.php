@@ -1,14 +1,19 @@
 <?php
+
 namespace Chameleon;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class MilliKartServiceProvider
+ * @package Chameleon
+ */
 class MilliKartServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/millikart.php' => config_path('millikart.php'),
+            __DIR__ . '/config/millikart.php' => config_path('millikart.php'),
         ]);
     }
 
@@ -16,10 +21,10 @@ class MilliKartServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config/millikart.php', 'millikart'
+            __DIR__ . '/config/millikart.php', 'millikart'
         );
 
-        $this->app->singleton('millikart',function(){
+        $this->app->singleton('millikart', function () {
 
             return new MilliKart($this->app['config']->get('millikart'));
         });
