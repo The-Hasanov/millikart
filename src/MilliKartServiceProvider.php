@@ -21,14 +21,12 @@ class MilliKartServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/millikart.php', 'millikart'
+            __DIR__ . '/config/millikart.php',
+            'millikart'
         );
 
         $this->app->singleton('millikart', function () {
-
             return new MilliKart($this->app['config']->get('millikart'));
         });
-
     }
-
 }

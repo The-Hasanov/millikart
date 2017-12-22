@@ -1,7 +1,11 @@
 # MilliKart Laravel
 ---
 ```console
+//Laravel 5.5
 composer require the-hasanov/millikart
+
+//Laravel 5.4
+composer require the-hasanov/millikart:1.1
 ```
 ### Laravel
 Service Provider

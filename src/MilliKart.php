@@ -1,6 +1,7 @@
 <?php
 
 namespace Chameleon;
+
 /**
  * Class MilliKart
  * @package Chameleon
@@ -23,7 +24,6 @@ class MilliKart
         'language',
         'signature'
     ];
-
     /**
      * @var array
      */
@@ -90,8 +90,9 @@ class MilliKart
     {
         $str = '';
         foreach ($this->sortParams($params) as $key => $value) {
-            if (!empty($value))
+            if (!empty($value)) {
                 $str .= strlen($value) . $value;
+            }
         }
 
         return strtoupper(md5($str . $this->config['key']));
@@ -138,8 +139,6 @@ class MilliKart
      */
     protected function xmlToArray($xml)
     {
-
         return json_decode(json_encode(simplexml_load_string($xml)), true);
     }
-
 }
