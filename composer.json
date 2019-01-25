@@ -23,7 +23,7 @@
                 "Chameleon\\MilliKartServiceProvider"
             ],
             "aliases": {
-                "Debugbar": "Barryvdh\\Debugbar\\Facade"
+                "MilliKart": "Chameleon\\MilliKartFacade"
             }
         }
     },
