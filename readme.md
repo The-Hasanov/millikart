@@ -1,21 +1,15 @@
 # MilliKart Laravel
 ---
+#### Install
 ```console
-//Laravel 5.5
+//Laravel 5.5+
 composer require the-hasanov/millikart
 
 //Laravel 5.4
 composer require the-hasanov/millikart:1.1
+//this version also need add service prodivder manually
 ```
 ### Laravel
-Service Provider
-```php
-Chameleon\MilliKartServiceProvider::class,
-```
-Facade
-```php
-'MilliKart' => Chameleon\MilliKartFacade::class,
-```
 Example
 ```php
 MilliKart::register([
@@ -38,4 +32,6 @@ $millikart->register([
 
 $millikart->status('test_reference'); //return array
 ```
-
+### TODO
+- [ ] Payment Model
+- [ ] Payment Events 

@@ -1,20 +1,35 @@
 {
-  "name": "the-hasanov/millikart",
-  "description": "MilliKart Class for laravel",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Hikmet Hesenov",
-      "email": "hikmet.hesenov.93@gmail.com"
+    "name": "the-hasanov/millikart",
+    "description": "MilliKart Class for laravel",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Hikmet Hesenov",
+            "email": "hikmet.hesenov.93@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "illuminate/support": "5.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chameleon\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Chameleon\\MilliKartServiceProvider"
+            ],
+            "aliases": {
+                "Debugbar": "Barryvdh\\Debugbar\\Facade"
+            }
+        }
+    },
+    "scripts": {
+        "fix": [
+            "php-cs-fixer fix src"
+        ]
     }
-  ],
-  "minimum-stability": "stable",
-  "require": {
-    "illuminate/support": "5.5.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Chameleon\\": "src/"
-    }
-  }
 }

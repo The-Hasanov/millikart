@@ -29,19 +29,30 @@ class MilliKart
      */
     public static $code = [
         -1 => 'Unknown',
-        0 => 'OK',
-        1 => 'Failed',
-        2 => 'Created',
-        3 => 'Pending',
-        4 => 'Declined',
-        5 => 'Reversed',
-        7 => 'Timeout',
-        9 => 'Cancelled',
+        0  => 'OK',
+        1  => 'Failed',
+        2  => 'Created',
+        3  => 'Pending',
+        4  => 'Declined',
+        5  => 'Reversed',
+        7  => 'Timeout',
+        9  => 'Cancelled',
         10 => 'Returned',
         11 => 'Active',
         12 => 'Attempt',
         13 => 'Pending3DS',
 
+    ];
+    /**
+     * @var array
+     */
+    private $request_options = [
+        'http' => [
+            'method' => 'POST',
+            'header' => [
+                'User-Agent: PHP'
+            ]
+        ]
     ];
 
     /**
@@ -64,9 +75,7 @@ class MilliKart
         //generate after all params set
         $params['signature'] = $this->signature($params);
 
-        $xml = file_get_contents($this->gateway('register') . '?' . http_build_query($this->sortParams($params)));
-
-        return $this->xmlToArray($xml);
+        return $this->request('register', $params);
     }
 
     /**
@@ -77,9 +86,7 @@ class MilliKart
     {
         $params = $this->mergeConfig(['reference' => $reference]);
 
-        $xml = file_get_contents($this->gateway('status') . '?' . http_build_query($this->sortParams($params)));
-
-        return $this->xmlToArray($xml);
+        return $this->request('status', $params);
     }
 
     /**
@@ -131,6 +138,36 @@ class MilliKart
     protected function mergeConfig($params)
     {
         return array_merge(array_intersect_key($this->config, array_flip($this->params)), $params);
+    }
+
+    /**
+     * @param  string $path
+     * @param array   $params
+     * @return array
+     */
+    protected function request($path, $params = [])
+    {
+        return $this->xmlToArray(
+            $this->content($this->gateway($path) . '?' . http_build_query($this->sortParams($params)))
+        );
+    }
+
+
+    /**
+     * @param string $url
+     * @return bool|string
+     */
+    private function content($url)
+    {
+        return file_get_contents($url, false, stream_context_create($this->request_options));
+    }
+
+    /**
+     * @param array $request_options
+     */
+    public function setRequestOptions(array $request_options)
+    {
+        $this->request_options = $request_options;
     }
 
     /**

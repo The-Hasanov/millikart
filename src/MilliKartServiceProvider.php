@@ -10,6 +10,9 @@ use Illuminate\Support\ServiceProvider;
  */
 class MilliKartServiceProvider extends ServiceProvider
 {
+    /**
+     * Boot
+     */
     public function boot()
     {
         $this->publishes([
@@ -17,7 +20,9 @@ class MilliKartServiceProvider extends ServiceProvider
         ]);
     }
 
-
+    /**
+     * Register
+     */
     public function register()
     {
         $this->mergeConfigFrom(
