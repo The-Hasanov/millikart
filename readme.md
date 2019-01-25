@@ -1,16 +1,14 @@
 # MilliKart Laravel
 ---
 #### Install
-```console
-//Laravel 5.5+
-composer require the-hasanov/millikart
 
-//Laravel 5.4
-composer require the-hasanov/millikart:1.1
-//this version also need add service prodivder manually
+Laravel 5.5+
+```console
+composer require the-hasanov/millikart
 ```
-### Laravel
-Example
+[Laravel 5.4](https://github.com/The-Hasanov/millikart/tree/1.1)
+### Usage
+#### Laravel
 ```php
 MilliKart::register([
     'amount' => 2000, //20azn
@@ -20,7 +18,7 @@ MilliKart::register([
 
 MilliKart::status('test_reference');//return array
 ```
-### Native PHP
+#### Native PHP
 ```php
 $millikart=new \Chameleon\MilliKart(include 'src/config/millikart.php');
 
