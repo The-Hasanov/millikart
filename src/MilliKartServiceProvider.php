@@ -30,8 +30,9 @@ class MilliKartServiceProvider extends ServiceProvider
             'millikart'
         );
 
-        $this->app->singleton('millikart', function () {
+        $this->app->singleton(MilliKart::class, function () {
             return new MilliKart($this->app['config']->get('millikart'));
         });
+        $this->app->alias(MilliKart::class, 'millikart');
     }
 }
