@@ -10,26 +10,15 @@ composer require the-hasanov/millikart
 ### Usage
 #### Laravel
 ```php
-MilliKart::register([
+$response=MilliKart::register([
     'amount' => 2000, //20azn
     'reference' => uniqid('test_'),
     'description' => 'test description'
-]);//return array
+]);//return MilliKartResponse
 
-MilliKart::status('test_reference');//return array
-```
-#### Native PHP
-```php
-$millikart=new \Chameleon\MilliKart(include 'src/config/millikart.php');
-
-$millikart->register([
-    'amount' => 2000,
-    'reference' => uniqid('test_'),
-    'description' => 'test description'
-]);//return array
-
-$millikart->status('test_reference'); //return array
+MilliKart::status('test_reference'); //return MilliKartResponse
 ```
 ### TODO
+- [x] Response
 - [ ] Payment Model
 - [ ] Payment Events 

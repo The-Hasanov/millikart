@@ -66,7 +66,7 @@ class MilliKart
 
     /**
      * @param array $params
-     * @return array
+     * @return MilliKartResponse
      */
     public function register($params)
     {
@@ -75,18 +75,18 @@ class MilliKart
         //generate after all params set
         $params['signature'] = $this->signature($params);
 
-        return $this->request('register', $params);
+        return new MilliKartResponse($this->request('register', $params));
     }
 
     /**
      * @param string $reference
-     * @return array
+     * @return MilliKartResponse
      */
     public function status($reference)
     {
         $params = $this->mergeConfig(['reference' => $reference]);
 
-        return $this->request('status', $params);
+        return new MilliKartResponse($this->request('status', $params));
     }
 
     /**
@@ -143,13 +143,11 @@ class MilliKart
     /**
      * @param  string $path
      * @param array   $params
-     * @return array
+     * @return string
      */
     protected function request($path, $params = [])
     {
-        return $this->xmlToArray(
-            $this->content($this->gateway($path) . '?' . http_build_query($this->sortParams($params)))
-        );
+        return $this->content($this->gateway($path) . '?' . http_build_query($this->sortParams($params)));
     }
 
 
