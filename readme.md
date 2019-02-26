@@ -12,13 +12,26 @@ composer require the-hasanov/millikart
 ```php
 $response=MilliKart::register([
     'amount' => 2000, //20azn
-    'reference' => uniqid('test_'),
+    'reference' => '123test_ref',
     'description' => 'test description'
 ]);//return MilliKartResponse
 
-MilliKart::status('test_reference'); //return MilliKartResponse
+//or use builder
+
+MilliKart::register(function (MilliKartBuilder $builder) {
+    $builder->amountAZN(20.0)
+        ->reference('123test_ref')
+        ->description('test description');
+});
+
+if($response->isValidRegister()){
+    $response->redirect();// return url
+}
+// Check transaction status
+MilliKart::status('123test_ref'); //return MilliKartResponse
 ```
 ### TODO
 - [x] Response
+- [X] Parameters Builder
 - [ ] Payment Model
 - [ ] Payment Events 

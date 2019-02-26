@@ -42,7 +42,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function redirect()
     {
@@ -91,7 +91,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function paymentDescription()
     {
@@ -99,7 +99,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function reference()
     {
@@ -125,7 +125,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function xid()
     {
@@ -133,7 +133,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function rrn()
     {
@@ -141,7 +141,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function approval()
     {
@@ -149,7 +149,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return array|mixed
+     * @return string|null
      */
     public function pan()
     {
@@ -157,16 +157,24 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function cardLast4()
     {
         return $this->pan() ? substr($this->pan(), -4) : null;
     }
 
+    /**
+     * @return string|null
+     */
+    public function cardFirst4()
+    {
+        return $this->pan() ? substr($this->pan(), 0, 4) : null;
+    }
+
 
     /**
-     * @return string
+     * @return string|null
      */
     public function responseCode()
     {
@@ -174,7 +182,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function rc()
     {
@@ -182,7 +190,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function reimbursement()
     {

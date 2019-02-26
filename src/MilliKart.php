@@ -2,6 +2,8 @@
 
 namespace Chameleon;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Class MilliKart
  * @package Chameleon
@@ -24,25 +26,7 @@ class MilliKart
         'language',
         'signature'
     ];
-    /**
-     * @var array
-     */
-    public static $code = [
-        -1 => 'Unknown',
-        0  => 'OK',
-        1  => 'Failed',
-        2  => 'Created',
-        3  => 'Pending',
-        4  => 'Declined',
-        5  => 'Reversed',
-        7  => 'Timeout',
-        9  => 'Cancelled',
-        10 => 'Returned',
-        11 => 'Active',
-        12 => 'Attempt',
-        13 => 'Pending3DS',
 
-    ];
     /**
      * @var array
      */
@@ -65,12 +49,20 @@ class MilliKart
     }
 
     /**
-     * @param array $params
+     * @param array|callable|MilliKartBuilder $params
      * @return MilliKartResponse
      */
     public function register($params)
     {
-        $params = $this->mergeConfig($params);
+        if (is_callable($params)) {
+            $builder = new MilliKartBuilder();
+            $params($builder);
+            $params = $builder;
+        }
+
+        $params = $this->mergeConfig(
+            $params instanceof Arrayable ? $params->toArray() : $params
+        );
 
         //generate after all params set
         $params['signature'] = $this->signature($params);
@@ -107,6 +99,7 @@ class MilliKart
 
 
     /**
+     * @param string $path
      * @return string
      */
     public function gateway($path = '')
