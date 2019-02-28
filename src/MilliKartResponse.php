@@ -194,7 +194,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
      */
     public function reimbursement()
     {
-        return $this->get('reimbursment', $this->get('reimbursement', null));
+        return $this->get('reimbursment', $this->get('reimbursement'));
     }
 
 
@@ -230,6 +230,31 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     public function isSuccess()
     {
         return $this->code() === self::CODE['OK'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPending()
+    {
+        return in_array($this->code(), [
+            self::CODE['CREATED'],
+            self::CODE['PENDING'],
+            self::CODE['ACTIVE'],
+            self::CODE['ATTEMPT'],
+            self::CODE['PENDING_3DS'],
+        ], true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFailed()
+    {
+        return in_array($this->code(), [
+            self::CODE['UNKNOWN'],
+            self::CODE['FAILED']
+        ], true);
     }
 
     /**
