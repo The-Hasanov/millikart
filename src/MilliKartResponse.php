@@ -253,7 +253,21 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     {
         return in_array($this->code(), [
             self::CODE['UNKNOWN'],
-            self::CODE['FAILED']
+            self::CODE['FAILED'],
+            self::CODE['DECLINED'],
+            self::CODE['TIMEOUT'],
+            self::CODE['CANCELLED']
+        ], true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRefunded()
+    {
+        return in_array($this->code(), [
+            self::CODE['REVERSED'],
+            self::CODE['RETURNED']
         ], true);
     }
 
