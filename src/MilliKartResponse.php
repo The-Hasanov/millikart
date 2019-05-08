@@ -8,7 +8,14 @@ use Illuminate\Contracts\Support\Jsonable;
 
 class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
 {
-
+    /**
+     * Response Types
+     */
+    const TYPE = [
+        'REGISTER' => 'register',
+        'REDIRECT' => 'redirect',
+        'STATUS'   => 'status'
+    ];
     /**
      * @var array
      */
@@ -33,12 +40,29 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     private $data = [];
 
     /**
+     * @var string
+     */
+    private $redirect_form_body;
+
+    /**
+     * @var string
+     */
+    private $response_type;
+
+    /**
      * MilliKartResponse constructor.
      * @param string|array $body
+     * @param string       $type
      */
-    public function __construct($body)
+    public function __construct($body, $type = self::TYPE['REGISTER'])
     {
-        $this->setData($body);
+        $this->response_type = $type;
+
+        if ($type !== self::TYPE['REDIRECT']) {
+            $this->setData($body);
+        } else {
+            $this->redirect_form_body = $body;
+        }
     }
 
     /**
@@ -224,6 +248,32 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
         return $this->code() !== self::CODE['UNKNOWN'];
     }
 
+
+    /**
+     * @return bool
+     */
+    public function isRegisterType()
+    {
+        return $this->response_type === self::TYPE['REGISTER'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRedirectType()
+    {
+        return $this->response_type === self::TYPE['REDIRECT'];
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isStatusType()
+    {
+        return $this->response_type === self::TYPE['STATUS'];
+    }
+
     /**
      * @return bool
      */
@@ -279,6 +329,14 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
     public function get($key = null, $default = null)
     {
         return array_get($this->data, $key, $default);
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getRedirectForm()
+    {
+        return $this->redirect_form_body;
     }
 
     /**

@@ -17,14 +17,26 @@ class MilliKart
     /**
      * @var array
      */
-    protected $params = [
+    protected static $params = [
         'mid',
         'amount',
         'currency',
         'description',
         'reference',
         'language',
-        'signature'
+        'signature',
+        'redirect'
+    ];
+    /**
+     * @var array
+     */
+    protected static $signature_params = [
+        'mid',
+        'amount',
+        'currency',
+        'description',
+        'reference',
+        'language'
     ];
 
     /**
@@ -54,20 +66,17 @@ class MilliKart
      */
     public function register($params)
     {
-        if (is_callable($params)) {
-            $builder = new MilliKartBuilder();
-            $params($builder);
-            $params = $builder;
-        }
-
-        $params = $this->mergeConfig(
-            $params instanceof Arrayable ? $params->toArray() : $params
-        );
+        $params = $this->mergeConfig($params);
 
         //generate after all params set
         $params['signature'] = $this->signature($params);
 
-        return new MilliKartResponse($this->request('register', $params));
+        return new MilliKartResponse(
+            $this->request('register', $params),
+            empty($params['redirect'])
+                ? MilliKartResponse::TYPE['REGISTER']
+                : MilliKartResponse::TYPE['REDIRECT']
+        );
     }
 
     /**
@@ -78,7 +87,7 @@ class MilliKart
     {
         $params = $this->mergeConfig(['reference' => $reference]);
 
-        return new MilliKartResponse($this->request('status', $params));
+        return new MilliKartResponse($this->request('status', $params), MilliKartResponse::TYPE['STATUS']);
     }
 
     /**
@@ -88,7 +97,7 @@ class MilliKart
     public function signature($params)
     {
         $str = '';
-        foreach ($this->sortParams($params) as $key => $value) {
+        foreach ($this->onlySignatureParams($params) as $key => $value) {
             if (!empty($value)) {
                 $str .= strlen($value) . $value;
             }
@@ -121,7 +130,16 @@ class MilliKart
      */
     protected function sortParams($params)
     {
-        return array_merge(array_intersect_key(array_flip($this->params), $params), $params);
+        return array_merge(array_intersect_key(array_flip(self::$params), $params), $params);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function onlySignatureParams($params)
+    {
+        return $this->sortParams(array_intersect_key($params, array_flip(self::$signature_params)));
     }
 
     /**
@@ -130,7 +148,14 @@ class MilliKart
      */
     protected function mergeConfig($params)
     {
-        return array_merge(array_intersect_key($this->config, array_flip($this->params)), $params);
+        if (is_callable($params)) {
+            $params($params = new MilliKartBuilder());
+        }
+
+        return array_merge(
+            array_intersect_key($this->config, array_flip(self::$params)),
+            $params instanceof Arrayable ? $params->toArray() : $params
+        );
     }
 
     /**
@@ -140,7 +165,17 @@ class MilliKart
      */
     protected function request($path, $params = [])
     {
-        return $this->content($this->gateway($path) . '?' . http_build_query($this->sortParams($params)));
+        return $this->content($this->buildUrl($path, $this->sortParams($params)));
+    }
+
+    /**
+     * @param string $path
+     * @param array  $params
+     * @return string
+     */
+    private function buildUrl($path, $params = [])
+    {
+        return $this->gateway($path) . '?' . http_build_query($params);
     }
 
 
@@ -159,14 +194,5 @@ class MilliKart
     public function setRequestOptions(array $request_options)
     {
         $this->request_options = $request_options;
-    }
-
-    /**
-     * @param string $xml
-     * @return array
-     */
-    protected function xmlToArray($xml)
-    {
-        return json_decode(json_encode(simplexml_load_string($xml)), true);
     }
 }

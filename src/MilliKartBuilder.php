@@ -7,6 +7,13 @@ use Illuminate\Contracts\Support\Arrayable;
 class MilliKartBuilder implements Arrayable
 {
     /**
+     * Currency Constants
+     */
+    const CURRENCY = [
+        'AZN' => 944,
+        'USD' => 840
+    ];
+    /**
      * @var array
      */
     private $params = [];
@@ -48,7 +55,7 @@ class MilliKartBuilder implements Arrayable
      */
     public function currencyAZN()
     {
-        return $this->currency(994);
+        return $this->currency(self::CURRENCY['AZN']);
     }
 
     /**
@@ -56,7 +63,7 @@ class MilliKartBuilder implements Arrayable
      */
     public function currencyUSD()
     {
-        return $this->currency(840);
+        return $this->currency(self::CURRENCY['USD']);
     }
 
     /**
@@ -108,9 +115,36 @@ class MilliKartBuilder implements Arrayable
     /**
      * @return MilliKartBuilder
      */
+    public function enableRedirect()
+    {
+        $this->params['redirect'] = 1;
+        return $this;
+    }
+
+    /**
+     * @return MilliKartBuilder
+     */
+    public function disableRedirect()
+    {
+        $this->params['redirect'] = 0;
+        return $this;
+    }
+
+    /**
+     * @return MilliKartBuilder
+     */
     public function languageEN()
     {
         return $this->language('en');
+    }
+
+    /**
+     * @param string $param
+     * @param string $value
+     */
+    public function setParam($param, $value)
+    {
+        $this->params[$param] = $value;
     }
 
     /**
