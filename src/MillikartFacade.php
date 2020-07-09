@@ -1,10 +1,13 @@
 <?php
 
-
 namespace Chameleon\Millikart;
 
+use Illuminate\Support\Facades\Facade;
 
-class MillikartFacade
+class MillikartFacade extends Facade
 {
-
+    protected static function getFacadeAccessor()
+    {
+        return Millikart::class;
+    }
 }
