@@ -1,0 +1,44 @@
+{
+    "name": "chameleon/millikart",
+    "license": "MIT",
+    "description": "Millikart payment for laravel",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Hikmet Hesenov",
+            "email": "hikmet.hesenov.93@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php" :"^7.1",
+        "illuminate/support": "5.7.x|5.8.x|6.x|7.x",
+        "spatie/array-to-xml": "^2.11",
+        "guzzlehttp/guzzle": "6.x|7.x",
+        "ext-json": "*",
+        "ext-simplexml": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chameleon\\Millikart\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Chameleon\\Millikart\\MillikartServiceProvider"
+            ],
+            "aliases": {
+                "Millikart": "Chameleon\\Millikart\\MillikartFacade"
+            }
+        }
+    },
+    "scripts": {
+        "fix": [
+            "php-cs-fixer fix src"
+        ]
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.0"
+    }
+}
