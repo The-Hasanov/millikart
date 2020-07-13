@@ -141,7 +141,9 @@ class Response
      */
     public function getInResponse($element)
     {
-        return Arr::get($this->elements, Element::tree(Element::ROOT, Element::RESPONSE, $element));
+        return Arr::get($this->elements,
+            Element::line(Element::ROOT, Element::RESPONSE, $element)
+        );
     }
 
     /**
@@ -150,7 +152,9 @@ class Response
      */
     private function getInOrder($element)
     {
-        return Arr::get($this->elements, Element::tree(Element::ROOT, Element::RESPONSE, Element::ORDER, $element));
+        return Arr::get($this->elements,
+            Element::line(Element::ROOT, Element::RESPONSE, Element::ORDER, $element)
+        );
     }
 
     /**
