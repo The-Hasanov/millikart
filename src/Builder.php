@@ -47,7 +47,7 @@ abstract class Builder
      */
     public function language($language)
     {
-        $this->setElementInRequest(Element::LANGUAGE, $language);
+        $this->setElementInRequest(Element::LANGUAGE, strtoupper($language));
         return $this;
     }
 
