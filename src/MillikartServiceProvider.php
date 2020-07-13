@@ -2,6 +2,7 @@
 
 namespace Chameleon\Millikart;
 
+use Chameleon\Millikart\Operation\CreateOrder;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +30,9 @@ class MillikartServiceProvider extends ServiceProvider
             Millikart::beforeBuild(static function (Builder $builder) use ($config) {
                 $builder->merchant($config['merchant'])
                     ->language($config['language']);
+                if ($builder instanceof CreateOrder && !empty($config['currency'])) {
+                    $builder->currency($config['currency']);
+                }
             });
 
             return new Millikart(new MillikartApi(new Client(), $config['gateway']));
