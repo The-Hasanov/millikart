@@ -12,7 +12,7 @@
     "minimum-stability": "stable",
     "require": {
         "php" :"^7.1",
-        "illuminate/support": "5.7.x|5.8.x|6.x|7.x",
+        "illuminate/support": "5.7.x|5.8.x|6.x|7.x|8.x",
         "spatie/array-to-xml": "^2.11",
         "guzzlehttp/guzzle": "6.x|7.x",
         "ext-json": "*",
