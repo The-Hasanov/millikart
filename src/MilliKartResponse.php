@@ -5,6 +5,7 @@ namespace Chameleon;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Arr;
 
 class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
 {
@@ -328,7 +329,7 @@ class MilliKartResponse implements Arrayable, Jsonable, \ArrayAccess
      */
     public function get($key = null, $default = null)
     {
-        return array_get($this->data, $key, $default);
+        return Arr::get($this->data, $key, $default);
     }
 
     /**
